@@ -1,10 +1,18 @@
+### Maven / Spring Boot ###
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### Logs ###
+*.log
+*.out
+*.err
+
+### IDEs ###
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,13 +21,13 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -29,5 +37,34 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/
+
+### OS files ###
+.DS_Store
+Thumbs.db
+
+### Node / React ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+.env
+.env.local
+.env.*.local
+
+# Build output
+/build
+/dist
+/.parcel-cache
+/.next
+/.nuxt
+/out
+coverage/
+
+### Misc ###
+*.swp
