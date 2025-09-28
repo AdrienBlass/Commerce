@@ -15,6 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ArticleDto {
 
+    private UUID idArticle;
+
     private String nomFournisseur;
     private String codeArticle;
     private String nomArticle;
@@ -29,4 +31,8 @@ public class ArticleDto {
     private Double coefficiantMagore;
     private Double prixVenteTtc;
     private Double prixVenteReel;
+
+    private Double prixAchatHtUnitaire;
+    private Double prixAchatTtcUnitaire;
+    private Double prixVenteTtcUnitaire;
 }

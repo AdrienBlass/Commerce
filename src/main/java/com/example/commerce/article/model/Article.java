@@ -3,12 +3,24 @@ package com.example.commerce.article.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "Article")
 public class Article {
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id_article", updatable = false, nullable = false)
+    private UUID idArticle;
 
     @Column(name = "nom_fournisseur")
     private String nomFournisseur;
@@ -19,8 +31,7 @@ public class Article {
     @Column(name = "coefficient_marge")
     private Double coefficiantMagore;
 
-    @Id
-    @Column(name = "code_article" , unique = true, nullable = false)
+    @Column(name = "code_article" )
     private String codeArticle;
 
     @Column(name = "nom_article")
@@ -49,4 +60,13 @@ public class Article {
 
     @Column
     private Double prixVenteReel;
+
+    @Column
+    private Double prixAchatHtUnitaire;
+
+    @Column
+    private Double prixAchatTtcUnitaire;
+
+    @Column
+    private Double prixVenteTtcUnitaire;
 }

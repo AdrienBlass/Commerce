@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/article")
@@ -22,24 +23,16 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto dto) {
-        try {
-            // Vérifier si le codeArticle existe déjà
-            if (articleService.existsById(dto.getCodeArticle())) {
-                // Retourner 409 Conflict si doublon
-                return ResponseEntity.status(409).body(null);
-            }
 
-            // Si dateAchat est vide, laisser null
-            if (dto.getDateAchat() == null) {
-                dto.setDateAchat(null);
-            }
 
-            ArticleDto savedDto = articleService.createArticle(dto);
-            return ResponseEntity.ok(savedDto);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
+        // Si dateAchat est vide, laisser null
+        if (dto.getDateAchat() == null) {
+            dto.setDateAchat(null);
         }
+
+        ArticleDto savedDto = articleService.createArticle(dto);
+        return ResponseEntity.ok(savedDto);
+
     }
 
 
@@ -50,14 +43,14 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticleById(@PathVariable String id) {
+    public ResponseEntity<Void> deleteArticleById(@PathVariable UUID id) {
         articleService.deleteArticleById(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ArticleDto> updateArticle(
-            @PathVariable String id,
+            @PathVariable UUID id,
             @RequestBody ArticleDto dto) {
         try {
             // Vérifier que l'article existe
@@ -66,7 +59,7 @@ public class ArticleController {
             }
 
             // On force l'id du DTO avec celui de l'URL pour éviter une incohérence
-            dto.setCodeArticle(id);
+            dto.setIdArticle(id);
 
             ArticleDto updatedDto = articleService.updateArticle(dto);
 

@@ -8,6 +8,8 @@ public class ArticleMapper {
 
     public static ArticleDto toDTO(Article article) {
         ArticleDto dto = new ArticleDto();
+
+        dto.setIdArticle(article.getIdArticle());
         dto.setCodeArticle(article.getCodeArticle());
         dto.setNomArticle(article.getNomArticle());
         dto.setMontantTva(article.getMontantTva());
@@ -29,12 +31,16 @@ public class ArticleMapper {
             dto.setDateAchat(article.getDateAchat());
         }
 
+        dto.setPrixAchatHtUnitaire(article.getPrixAchatHtUnitaire());
+        dto.setPrixAchatTtcUnitaire(article.getPrixAchatTtcUnitaire());
+        dto.setPrixVenteTtcUnitaire(article.getPrixVenteTtcUnitaire());
         dto.setQuantite(article.getQuantite());
         return dto;
     }
 
     public static Article toEntity(ArticleDto dto) {
         Article article = new Article();
+        article.setIdArticle(dto.getIdArticle());
         article.setCodeArticle(dto.getCodeArticle());
         article.setNomArticle(dto.getNomArticle());
         article.setMontantTva(dto.getMontantTva());
@@ -56,6 +62,9 @@ public class ArticleMapper {
             article.setDateAchat(dto.getDateAchat());
         }
 
+        article.setPrixAchatHtUnitaire(dto.getPrixAchatHtUnitaire());
+        article.setPrixAchatTtcUnitaire(dto.getPrixAchatTtcUnitaire());
+        article.setPrixVenteTtcUnitaire(dto.getPrixVenteTtcUnitaire());
         article.setQuantite(dto.getQuantite());
         return article;
     }

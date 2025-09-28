@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 import static com.example.commerce.utils.MathUtils.*;
 
@@ -39,13 +40,17 @@ public class ArticleService {
             case TVA_20 -> 20.0;
         };
 
-        // Utilisation des méthodes utilitaires
+        dto.setPrixAchatHtUnitaire(arrondir2Decimales(dto.getPrixAchatHt() / dto.getQuantite()));
+
         dto.setMontantTva(calculerTva(dto.getPrixAchatHt(), taux));
         dto.setPrixAchatTtc(calculerPrixTtc(dto.getPrixAchatHt(), taux));
+        dto.setPrixAchatTtcUnitaire(arrondir2Decimales(dto.getPrixAchatTtc() / dto.getQuantite()));
 
-        double coefficiantMagore = dto.getPrixAchatHt() * 3;
+        double coefficiantMagore = dto.getPrixAchatHtUnitaire() * 3;
         dto.setCoefficiantMagore(arrondir2Decimales(coefficiantMagore));
+
         dto.setPrixVenteTtc(calculerPrixTtc(coefficiantMagore, tauxVente));
+        dto.setPrixVenteTtcUnitaire(calculerPrixTtc(coefficiantMagore, tauxVente));
 
         Article article = ArticleMapper.toEntity(dto);
         article = articleRepository.save(article);    // Hibernate fera un insert
@@ -60,7 +65,7 @@ public class ArticleService {
                 .toList();
     }
 
-    public void deleteArticleById(String id) {
+    public void deleteArticleById(UUID id) {
         if (!articleRepository.existsById(id)) {
             throw new EntityNotFoundException("Article avec id " + id + " non trouvé");
         }
@@ -69,7 +74,7 @@ public class ArticleService {
 
 
     public ArticleDto updateArticle(ArticleDto dto) {
-        Article entity = articleRepository.findById(dto.getCodeArticle())
+        Article entity = articleRepository.findById(dto.getIdArticle())
                 .orElseThrow(() -> new IllegalArgumentException("Article introuvable"));
 
         // Mettre à jour uniquement les champs modifiables
@@ -85,11 +90,11 @@ public class ArticleService {
 
         Article saved = articleRepository.save(entity);
 
-        return ArticleMapper.toDTO(saved); // si tu as un mapper
+        return ArticleMapper.toDTO(saved);
     }
 
 
-    public boolean existsById(String codeArticle) {
-        return articleRepository.existsById(codeArticle);
+    public boolean existsById(UUID idArticle) {
+        return articleRepository.existsById(idArticle);
     }
 }
