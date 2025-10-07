@@ -35,4 +35,5 @@ public class ArticleDto {
     private Double prixAchatHtUnitaire;
     private Double prixAchatTtcUnitaire;
     private Double prixVenteTtcUnitaire;
+
 }
