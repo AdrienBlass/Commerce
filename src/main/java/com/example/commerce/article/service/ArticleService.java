@@ -77,7 +77,6 @@ public class ArticleService {
         Article entity = articleRepository.findById(dto.getIdArticle())
                 .orElseThrow(() -> new IllegalArgumentException("Article introuvable"));
 
-        // Mettre à jour uniquement les champs modifiables
         entity.setNomFournisseur(dto.getNomFournisseur());
         entity.setNomArticle(dto.getNomArticle());
         entity.setDateAchat(dto.getDateAchat());
@@ -87,7 +86,7 @@ public class ArticleService {
         entity.setTva(dto.getTva().getLabel());
         entity.setTvaVente(dto.getTvaVente().getLabel());
         entity.setPrixVenteReel(dto.getPrixVenteReel());
-
+        entity.setCodeArticle(dto.getCodeArticle());
         Article saved = articleRepository.save(entity);
 
         return ArticleMapper.toDTO(saved);
